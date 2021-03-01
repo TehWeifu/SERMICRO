@@ -19,3 +19,7 @@ pass = uca
 usuario AENA
 user = AENA
 pass = AENA
+
+vgs = lector de tarjetas de vuelo (ticket)
+atp
+btp
