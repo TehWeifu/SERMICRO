@@ -1,0 +1,21 @@
+Comandos:
+Crtl + Alt + F5 = Control de ordenador (CMD)
+venos2 = pass
+
+
+vpsgui = listado dee dispositivos conectados al ordenador
+	para hacer test
+
+
+netplwiz = para sacar el usuario de AENA y poner el administrador
+	Una vez entra	ejecutarlo con espacio mas enter
+logoff = para cerrar sesion
+
+
+usuario administrador
+user asisuca
+pass = uca
+
+usuario AENA
+user = AENA
+pass = AENA
