@@ -20,6 +20,12 @@ usuario AENA
 user = AENA
 pass = AENA
 
-vgs = lector de tarjetas de vuelo (ticket)
+BGR = boarding gate reader | lector de tarjetas de vuelo (ticket)
 atp
 btp
+cts
+
+/c$ para acceder con privilegios de administrador al disco
+
+SIPA
+Alt + F4 para acceder al ordenador normal
