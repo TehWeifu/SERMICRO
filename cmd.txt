@@ -29,3 +29,9 @@ cts
 
 SIPA
 Alt + F4 para acceder al ordenador normal
+
+
+shutdown \m 192.168.211.123 \r \t 0
+
+
+https://docs.microsoft.com/en-us/windows/win32/api/icmpapi/nf-icmpapi-icmpsendecho
