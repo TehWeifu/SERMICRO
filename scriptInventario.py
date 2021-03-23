@@ -11,7 +11,7 @@ sipa_gates = [[]] * 23
 sipa_checking = [[]] * 63
 
 with open('inventarioUCA.csv', newline='') as csvfile:
-    spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
+    spamreader = csv.reader(csvfile, delimiter=';', quotechar='|')
     for row in spamreader:
         uca_data.append(row)
 
@@ -37,9 +37,8 @@ for row in uca_data:
         else:
             uca_gates[place_num].append([row[0], row[1], row[3]])
 
-
 with open('inventarioSIPA.csv', newline='') as csvfile:
-    spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
+    spamreader = csv.reader(csvfile, delimiter=';', quotechar='|')
     for row in spamreader:
         sipa_data.append(row)
 
@@ -60,36 +59,16 @@ for row in sipa_data:
 
         sipa_gates[place_num] = [row[4], row[5], row[6], row[7], row[9], row[11], row[12]]
 
-
 workbook = xlsxwriter.Workbook('hello.xlsx')
 worksheet_uca = workbook.add_worksheet("UCA")
 worksheet_sipa = workbook.add_worksheet("SIPA")
 
-id_cells = workbook.add_format()
-id_cells.set_bold()
-id_cells.set_font_color('white')
-id_cells.set_bg_color('#ACB9CA')
-id_cells.set_border()
-
-name_cells = workbook.add_format()
-name_cells.set_bold()
-name_cells.set_border()
-
-device_word = workbook.add_format()
-device_word.set_bg_color('#D6DCE4')
-device_word.set_border()
-
-device_type = workbook.add_format()
-device_type.set_bold()
-device_type.set_align('center')
-device_type.set_border()
-
-type_code = workbook.add_format()
-type_code.set_border()
-type_code.set_align('right')
-
-normal_cell = workbook.add_format()
-normal_cell.set_right()
+id_cells = workbook.add_format({'bold': True, 'font_color': 'white', 'bg_color': '#ACB9CA', 'border': True})
+name_cells = workbook.add_format({'bold': True, 'border': True})
+device_word = workbook.add_format({'bg_color': '#D6DCE4', 'border': True})
+device_type = workbook.add_format({'bold': True, 'align': 'center', 'border': True})
+type_code = workbook.add_format({'align': 'right', 'border': True})
+normal_cell = workbook.add_format({'right': True})
 
 row = 0
 col = 0
@@ -97,6 +76,7 @@ num_stand = 0
 num_stand_str = ""
 stand_terminal = 0
 gate_name = num_stand_str
+num_devices = 0
 
 for stand in uca_gates:
     if 0 <= num_stand <= 4:
@@ -140,7 +120,11 @@ for stand in uca_gates:
     col = 0
     row += 1
 
+    num_devices = 0
     for device in stand:
+        if device[0] != "TECLADO" and device[0] != "CPU" and device[0] != "MONITOR":
+            num_devices += 1
+
         worksheet_uca.write(row, col, 'Dispositivo', device_word)
         col += 1
         worksheet_uca.write(row, col, device[0], device_type)
@@ -164,7 +148,7 @@ for stand in uca_gates:
 
     worksheet_uca.write(row, col, 'Electricidad', device_word)
     col += 1
-    worksheet_uca.write(row, col, "2 tomas a SAI, 2 tomas normal", name_cells)
+    worksheet_uca.write(row, col, f"2 tomas a SAI, {num_devices} tomas normal", name_cells)
 
     col = 0
     row += 1
@@ -328,7 +312,8 @@ for sipa in sipa_gates:
     row += 2
 
 
-for sipa in sipa_gates:
+sipa_checking.pop(0)
+for sipa in sipa_checking:
     worksheet_sipa.write(row, col, "Workstation ID", id_cells)
     col += 1
     worksheet_sipa.write(row, col, f"{sipa[0]} {sipa[1]}", name_cells)
