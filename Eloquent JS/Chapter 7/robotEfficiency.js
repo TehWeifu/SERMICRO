@@ -80,6 +80,19 @@ VillageState.random = function(parcelCount = 5) {
     return new VillageState("Post Office", parcels);
 };
 
+var mailRoute = [
+    "Alice's House", "Cabin", "Alice's House", "Bob's House",
+    "Town Hall", "Daria's House", "Ernie's House",
+    "Grete's House", "Shop", "Grete's House", "Farm",
+    "Marketplace", "Post Office"
+];
+
+function routeRobot(state, memory) {
+    if (memory.length == 0) {
+        memory = mailRoute;
+    }
+    return {direction: memory[0], memory: memory.slice(1)};
+}
 
 function findRoute(graph, from, to) {
     let work = [{at: from, route: []}];
@@ -106,4 +119,20 @@ function goalOrientedRobot({place, parcels}, route) {
     return {direction: route[0], memory: route.slice(1)};
 }
 
-runRobot(VillageState.random(), goalOrientedRobot, [])
+//My Code
+
+function yourRobot({place, parcels}, route) {
+    let tmpRoute
+    for (const parcel of parcels) {
+        if (parcel.place !== place) {
+            tmpRoute = findRoute(roadGraph, place, parcel.place)
+            route = (tmpRoute.length < route.length) ? tmpRoute : route
+            if (route.length === 0) route = tmpRoute
+        } else {
+            tmpRoute = findRoute(roadGraph, place, parcel.address)
+            route = (tmpRoute.length < route.length) ? tmpRoute : route
+            if (route.length === 0) route = tmpRoute
+        }
+    }
+    return {direction: route[0], memory: route.slice(1)};
+}

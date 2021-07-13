@@ -1,15 +1,16 @@
 var roads = [
-    "Alice's House-Bob's House",   "Alice's House-Cabin",
-    "Alice's House-Post Office",   "Bob's House-Town Hall",
+    "Alice's House-Bob's House", "Alice's House-Cabin",
+    "Alice's House-Post Office", "Bob's House-Town Hall",
     "Daria's House-Ernie's House", "Daria's House-Town Hall",
     "Ernie's House-Grete's House", "Grete's House-Farm",
-    "Grete's House-Shop",          "Marketplace-Farm",
-    "Marketplace-Post Office",     "Marketplace-Shop",
-    "Marketplace-Town Hall",       "Shop-Town Hall"
+    "Grete's House-Shop", "Marketplace-Farm",
+    "Marketplace-Post Office", "Marketplace-Shop",
+    "Marketplace-Town Hall", "Shop-Town Hall"
 ];
 
 function buildGraph(edges) {
     let graph = Object.create(null);
+
     function addEdge(from, to) {
         if (graph[from] == null) {
             graph[from] = [to];
@@ -17,6 +18,7 @@ function buildGraph(edges) {
             graph[from].push(to);
         }
     }
+
     for (let [from, to] of edges.map(r => r.split("-"))) {
         addEdge(from, to);
         addEdge(to, from);
@@ -46,7 +48,7 @@ var VillageState = class VillageState {
 }
 
 function runRobot(state, robot, memory) {
-    for (let turn = 0;; turn++) {
+    for (let turn = 0; ; turn++) {
         if (state.parcels.length == 0) {
             console.log(`Done in ${turn} turns`);
             break;
@@ -67,7 +69,7 @@ function randomRobot(state) {
     return {direction: randomPick(roadGraph[state.place])};
 }
 
-VillageState.random = function(parcelCount = 5) {
+VillageState.random = function (parcelCount = 5) {
     let parcels = [];
     for (let i = 0; i < parcelCount; i++) {
         let address = randomPick(Object.keys(roadGraph));
@@ -80,6 +82,19 @@ VillageState.random = function(parcelCount = 5) {
     return new VillageState("Post Office", parcels);
 };
 
+var mailRoute = [
+    "Alice's House", "Cabin", "Alice's House", "Bob's House",
+    "Town Hall", "Daria's House", "Ernie's House",
+    "Grete's House", "Shop", "Grete's House", "Farm",
+    "Marketplace", "Post Office"
+];
+
+function routeRobot(state, memory) {
+    if (memory.length == 0) {
+        memory = mailRoute;
+    }
+    return {direction: memory[0], memory: memory.slice(1)};
+}
 
 function findRoute(graph, from, to) {
     let work = [{at: from, route: []}];
@@ -106,4 +121,53 @@ function goalOrientedRobot({place, parcels}, route) {
     return {direction: route[0], memory: route.slice(1)};
 }
 
-runRobot(VillageState.random(), goalOrientedRobot, [])
+//My Robot
+function yourRobot({place, parcels}, route) {
+    let tmpRoute
+    for (const parcel of parcels) {
+        if (parcel.place !== place) {
+            tmpRoute = findRoute(roadGraph, place, parcel.place)
+            route = (tmpRoute.length < route.length) ? tmpRoute : route
+            if (route.length === 0) route = tmpRoute
+        } else {
+            tmpRoute = findRoute(roadGraph, place, parcel.address)
+            route = (tmpRoute.length < route.length) ? tmpRoute : route
+            if (route.length === 0) route = tmpRoute
+        }
+    }
+    return {direction: route[0], memory: route.slice(1)};
+}
+
+//My Code
+
+function compareRobots(robot1, memory1, robot2, memory2) {
+    const testSample = 100
+    let randomTask
+    let robotOneCount = 0
+    let robotTwoCount = 0
+
+    for (let i = 0; i < testSample; i++) {
+        randomTask = VillageState.random()
+
+        robotOneCount += runRobotV2(randomTask, robot1, memory1)
+        robotTwoCount += runRobotV2(randomTask, robot2, memory2)
+    }
+
+    console.log(`Robot 1 took an average of ${Math.round(robotOneCount / testSample * 100) / 100} moves to finish a task`)
+    console.log(`Robot 2 took an average of ${Math.round(robotTwoCount / testSample * 100) / 100} moves to finish a task`)
+}
+
+function runRobotV2(state, robot, memory) {
+    for (let turn = 0; ; turn++) {
+        if (state.parcels.length == 0) {
+            return turn
+            break;
+        }
+        let action = robot(state, memory);
+        state = state.move(action.direction);
+        memory = action.memory;
+    }
+}
+
+
+compareRobots(yourRobot, [], goalOrientedRobot, []);
