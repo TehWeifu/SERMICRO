@@ -1,0 +1,36 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    background-color: #111;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow: hidden;
+    width: 400px;
+    height: 400px;
+}
+
+.box {
+    width: 16px;
+    height: 16px;
+    margin: 2px;
+    background-color: #1d1d1d;
+    box-shadow: 0 0 2px #000;
+    transition: 2s ease;
+}
+
+.box:hover {
+    transition-duration: 0s;
+}

@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: mintcream;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+.container {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+    padding: 20px 0 40px 0;
+}
+
+.container h3 {
+    width: 60%;
+    text-align: center;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+.container .choice-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.choice-container .choice {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 5px;
+    width: 100px;
+    cursor: pointer;
+}
+
+.choice-container .choice:hover,
+.choice-container .choice.active {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.choice-container .choice span.emoji {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.container button {
+    padding: 10px 30px;
+    background-color: #222;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+    text-transform: capitalize;
+    cursor: pointer;
+}
+
+.container button:active {
+    transform: scale(0.95);
+}
+
+
+.result {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    max-width: 400px;
+}
+
+.result .emoji {
+    font-size: 2rem;
+    color: red;
+}
+
+.result p {
+    margin: 10px;
+}
+
+
+.hide {
+    display: none;
+}
