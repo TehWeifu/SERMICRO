@@ -1,16 +1,133 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 * {
     box-sizing: border-box;
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    font-family: 'Press Start 2P', cursive;
+    position: relative;
     height: 100vh;
     margin: 0;
     overflow: hidden;
+    background-color: royalblue;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+
+.time {
+    position: absolute;
+    top: 50px;
+    left: 30px;
+    font-size: 1.2rem;
+    z-index: 100;
+}
+
+.score {
+    position: absolute;
+    top: 50px;
+    right: 30px;
+    font-size: 1.2rem;
+    z-index: 100;
+}
+
+.insect {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+}
+.insect img {
+    width: 100%;
+    height: 100%;
+}
+
+.game-container .message {
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    font-family: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 100;
+}
+
+/*game start styles*/
+.game-start {
+    text-transform: capitalize;
+    margin: auto auto;
+    text-align: center;
+    font-size: 1.5rem;
+    transition: all 0.3s ease-in-out;
+}
+
+.game-start button {
+    border: none;
+    background-color: #fff;
+    color: royalblue;
+    font-size: 1rem;
+    padding: 20px;
+    font-weight: bold;
+    font-family: inherit;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+
+.game-start button:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.game-start button:active {
+    transform: scale(0.98);
+}
+
+/*Insect selection styles*/
+.insect-selection {
+    text-align: center;
+}
+
+.insect-display {
+    display: flex;
+    justify-items: center;
+    align-items: center;
+}
+
+.insect-option {
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border: 2px solid #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.insect-option:hover {
+    background-color: #fff;
+    color: royalblue;
+}
+
+.insect-option img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.hide {
+    display: none;
+    transform: scale(0);
+    transition: all 0.3s ease-in-out;
+}
+
